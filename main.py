@@ -48,6 +48,11 @@ tries = 0
 streak = 0
 streakrecord = 0
 q = randint(0,len(Q)-1)
+stillPlaying = True
+answer = ""
+noQuestions = 0
+correctQ = 0
+
 
 print('+-------->')
 print('| Quiz time: %s' %(name))
@@ -56,19 +61,18 @@ print("| Commands: 'quit' 'exit'         |")
 print('+---------------------------------+')
 print('| 1st question;')
 
-
-# Starting questions loop
-while True:
-
-    print('\n| %s' %(Q[q]))
-    opt1 = A[Q[random.randint(1,510)]]
-    opt2 = A[Q[random.randrange(1,511)]]
-    opt3 = A[Q[random.randrange(1,511)]]
+def question():
+    global answer
+    global stillPlaying
+    print('\n| %s' % (Q[q]))
+    opt1 = A[Q[random.randint(1, 510)]]
+    opt2 = A[Q[random.randrange(1, 511)]]
+    opt3 = A[Q[random.randrange(1, 511)]]
     options_list = [opt1, opt2, opt3, A[Q[q]]]
     random.shuffle(options_list)
     print(f"A: {options_list[0]}")
     print(f"B: {options_list[1]}")
-    print(f"C: {options_list[2]}")
+    print(f"C: {options_list[2origin/master]}")
     print(f"D: {options_list[3]}")
     answer = input("| Answer: ")
     if answer == "A":
@@ -77,16 +81,34 @@ while True:
         answer = options_list[1]
     elif answer == "C":
         answer = options_list[2]
-    else:
+    elif answer == "D":
         answer = options_list[3]
+    elif answer == 'quit' or answer == 'exit':
+        print('| Correct answer was: %s' % (A[Q[q]]))
+        stillPlaying = False
+    else:
+        print("Not a valid answer please try again.")
+        question()
+    print(answer)
+
+# Starting questions loop
+while stillPlaying == True:
+
+    question()
     print(answer)
     tries += 1
+    noQuestions += 1
+
 
     if answer != A[Q[q]]:
         print('| Wrong answer!')
-
-    if answer == A[Q[q]]:
+    elif answer == A[Q[q]]:
+        correctQ += 1
+        percentQ = correctQ / noQuestions * 100
         print('| Correct! try: %i' %(tries))
+        print(noQuestions)
+        print(correctQ)
+        print(f"{percentQ}%")
         if tries <= 1:
             streak += 1
         if streak >= 5:
@@ -99,12 +121,6 @@ while True:
         q = randint(0,len(Q)-1)
         tries = 0
 
-
-    if answer in ('quit', 'exit'):
-        print('| Correct answer was: %s' %(A[Q[q]]))
-        print('| Bye bye!')
-        print('+--------------------------------->')
-        break
 
 
 
