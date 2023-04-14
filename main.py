@@ -72,7 +72,7 @@ def question():
     random.shuffle(options_list)
     print(f"A: {options_list[0]}")
     print(f"B: {options_list[1]}")
-    print(f"C: {options_list[2origin/master]}")
+    print(f"C: {options_list[2]}")
     print(f"D: {options_list[3]}")
     answer = input("| Answer: ")
     if answer == "A":
